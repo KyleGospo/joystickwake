@@ -30,7 +30,7 @@ joystick activity is detected.
 Overview
 --------
 
-When installed from a package, joystickwake launches automatically when a user
+If installed from a package, joystickwake launches automatically when a user
 logs in to any modern linux desktop environment.  It can also be run manually,
 without formal installation, since the executable is self-contained.
 
@@ -66,9 +66,10 @@ If all known wakers fail, joystickwake will quit.  This could happen if no
 screen blanker is running, or if one that is running requires a custom wake
 command (see below).
 
-If the python3 Xlib package is installed, joystickwake will quit when the
+If the python3 Xlib package is installed, joystickwake will quit when the X11
 desktop session ends.  Otherwise, it will quit when its parent process exits.
-(This avoids leaving old instances running after the user logs out.)
+(This keeps old instances from persisting after the user logs out, on both X
+and Wayland.)
 
 Log messages are written to standard error, which is normally captured by the
 desktop environment in a file such as ``$HOME/.xsession-errors``.  At the
@@ -127,7 +128,7 @@ the wake commands might print a message about being unable to find its screen
 saver, or your shell's command-not-found script might offer suggestions when
 joystickwake probes for a command that is not installed on your system.  Both
 of these examples are harmless, and should appear only a few times, since
-joystickwake avoids failing commands after a few tries.
+joystickwake avoids commands that keep failing after a few tries.
 
 If joystickwake keeps the screen awake even when all joysticks are idle, it is
 likely due to "stick drift", meaning that a joystick either is not centering
@@ -148,8 +149,8 @@ switching from GNOME's Wayland session to X11.
 
 If the log shows at least one waker succeeding but the screen still blanks
 while a joystick is in use, your screen blanker's timeout might be too short
-for joystickwake.  Increasing that timeout or decreasing joystickwake's
-``cooldown`` setting might help.
+for joystickwake.  If so, increasing that timeout or decreasing joystickwake's
+``cooldown`` setting (making it the shorter of the two) will help.
 
 Alternatively, it is possible that multiple screen blankers are running, such
 as a graphical screen saver and a power manager, with joystickwake only knowing
