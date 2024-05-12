@@ -1,3 +1,9 @@
+joystickwake (0.4.2) bookworm-forestix; urgency=medium
+
+  * Log udev details if a device node is missing.
+
+ -- Forest <forestix@nom.one>  Sat, 11 May 2024 17:21:20 -0700
+
 joystickwake (0.4.1) bullseye-forestix; urgency=medium
 
   * Accommodate devices with no ID_BUS udev property.
