@@ -380,7 +380,8 @@ class JoystickWatcher:
     def _is_joystick(device):
         """Return True if a udev device represents a joystick.
         """
-        return bool(device.get('ID_INPUT_JOYSTICK') and device.device_node)
+        jsproperty = device.get('ID_INPUT_JOYSTICK')
+        return bool(jsproperty and jsproperty != '0' and device.device_node)
 
     @staticmethod
     def _get_device_description(device):
@@ -652,9 +653,9 @@ def stop_loop_when_xserver_quits(log, loop):
     log.info("connected to the display server")
 
     def read_display_event():
-        """Process an Xlib message."""
+        """Drain the incoming X message queue."""
         try:
-            if display.pending_events():  # avoid blocking on partial messages
+            while display.pending_events():
                 display.next_event()
         except Xlib.error.ConnectionClosedError:
             log.debug("lost connection to the display server")
